@@ -1,10 +1,11 @@
 package br.com.fiap.projectmgt.interfaces.exceptions;
 
-import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
-import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
+import lombok.Getter;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,7 +24,6 @@ public class GlobalExceptionHandler {
 
     @Getter
     public static class ErrorResponse {
-
         private String message;
 
         public ErrorResponse(String message) {

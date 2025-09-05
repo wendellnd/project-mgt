@@ -38,18 +38,6 @@ public class Project {
         );
     }
 
-    static public List<ProjectOutDto> toOutDtoList(List<Project> projects) {
-        return projects.stream().map(
-                p -> new ProjectOutDto(
-                        p.getId(),
-                        p.getName(),
-                        p.getDescription(),
-                        p.getStartDate(),
-                        p.getEndDate()
-                )
-        ).toList();
-    }
-
     static public JpaProjectEntity toJpaProjectEntity(Project project) {
         return new JpaProjectEntity(
                 project.getName(),

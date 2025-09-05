@@ -3,8 +3,11 @@ package br.com.fiap.projectmgt.interfaces.controller;
 import br.com.fiap.projectmgt.application.service.ProjectService;
 import br.com.fiap.projectmgt.application.service.impl.ProjectServiceImpl;
 import br.com.fiap.projectmgt.domain.entity.Project;
+import br.com.fiap.projectmgt.domain.entity.ProjectList;
 import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
 import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
+import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDtoList;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +26,11 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectOutDto>> getProjects(@RequestParam(name = "pageSize", required = false,defaultValue = "10") Integer pageSize,
-                                                               @RequestParam(name = "pageNumber", required = false,defaultValue = "0") Integer pageNumber) {
+    public ResponseEntity<ProjectOutDtoList> getProjects(@RequestParam(name = "pageSize", required = false,defaultValue = "10") Integer pageSize,
+                                                                   @RequestParam(name = "pageNumber", required = false,defaultValue = "0") Integer pageNumber) {
 
-        List<Project> allProjects = projectService.listProjects(pageSize, pageNumber);
-        List<ProjectOutDto> projectsDto = Project.toOutDtoList(allProjects);
+        ProjectList allProjects = projectService.listProjects(pageSize, pageNumber);
+        ProjectOutDtoList projectsDto = ProjectList.toOutDtoList(allProjects);
 
         return ResponseEntity.ok(projectsDto);
     }

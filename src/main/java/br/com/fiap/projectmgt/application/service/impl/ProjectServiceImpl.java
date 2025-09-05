@@ -2,15 +2,12 @@ package br.com.fiap.projectmgt.application.service.impl;
 
 import br.com.fiap.projectmgt.application.service.ProjectService;
 import br.com.fiap.projectmgt.domain.entity.Project;
-import br.com.fiap.projectmgt.domain.entity.Tarefa;
+import br.com.fiap.projectmgt.domain.entity.ProjectList;
 import br.com.fiap.projectmgt.infrastructure.entity.JpaProjectEntity;
 import br.com.fiap.projectmgt.infrastructure.repository.JpaProjectEntityRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -20,14 +17,13 @@ public class ProjectServiceImpl implements ProjectService {
         this.repository = repository;
     }
 
-    public List<Project> listProjects(Integer pageSize, Integer pageNumber) {
+    public ProjectList listProjects(Integer pageSize, Integer pageNumber) {
         Page<JpaProjectEntity> pageOfProjects = this.repository.findAll(
                 Pageable
                         .ofSize(pageSize)
                         .withPage(pageNumber));
 
-        List<Tarefa> tasks = new ArrayList<Tarefa>();
-        return JpaProjectEntity.toProjectEntityList(pageOfProjects, tasks);
+        return JpaProjectEntity.toProjectEntityList(pageOfProjects, pageSize, pageNumber);
     }
 
     public Project getProject(Long projectId) {
