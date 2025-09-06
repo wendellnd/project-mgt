@@ -1,7 +1,5 @@
 package br.com.fiap.projectmgt.infrastructure.entity;
 
-
-
 import br.com.fiap.projectmgt.domain.entity.Project;
 import br.com.fiap.projectmgt.domain.entity.ProjectList;
 import br.com.fiap.projectmgt.domain.entity.Tarefa;
@@ -43,7 +41,7 @@ public class JpaProjectEntity {
         this.endDate = endDate;
     }
 
-    public static Project toProjectEntity(JpaProjectEntity project) {
+    public static Project toProject(JpaProjectEntity project) {
         List<Tarefa> tasks = new ArrayList<Tarefa>();
         return new Project(
                 project.getId(),
@@ -51,12 +49,11 @@ public class JpaProjectEntity {
                 project.getDescription(),
                 project.getStartDate(),
                 project.getEndDate(),
-                tasks
-        );
+                tasks);
     }
 
-
-    public static ProjectList toProjectEntityList(Page<JpaProjectEntity> jpaProjects, Integer pageSize, Integer pageNumber) {
+    public static ProjectList toProjectEntityList(Page<JpaProjectEntity> jpaProjects, Integer pageSize,
+            Integer pageNumber) {
         List<Tarefa> tasks = new ArrayList<Tarefa>();
         List<Project> projects = jpaProjects.getContent().stream().parallel().map(
                 p -> new Project(
@@ -65,9 +62,8 @@ public class JpaProjectEntity {
                         p.getDescription(),
                         p.getStartDate(),
                         p.getEndDate(),
-                        tasks
-                )
-        ).toList();
+                        tasks))
+                .toList();
 
         return new ProjectList(projects, pageSize, pageNumber);
     }

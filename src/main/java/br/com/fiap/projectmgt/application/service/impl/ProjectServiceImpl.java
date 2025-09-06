@@ -29,13 +29,13 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getProject(Long projectId) {
         final JpaProjectEntity p = this.repository.findById(projectId).orElseThrow();
 
-        return JpaProjectEntity.toProjectEntity(p);
+        return JpaProjectEntity.toProject(p);
     }
 
     public Project createProject(Project project) {
         JpaProjectEntity savedEntity = this.repository.save(Project.toJpaProjectEntity(project));
 
-        return JpaProjectEntity.toProjectEntity(savedEntity);
+        return JpaProjectEntity.toProject(savedEntity);
     }
 
     public Project updateProject(Project project) {
