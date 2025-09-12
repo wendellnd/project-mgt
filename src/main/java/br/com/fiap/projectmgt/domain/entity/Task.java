@@ -2,7 +2,7 @@ package br.com.fiap.projectmgt.domain.entity;
 
 import java.time.LocalDate;
 
-public class Tarefa {
+public class Task {
 
     private Long id;
 

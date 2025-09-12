@@ -24,7 +24,7 @@ public class Project {
 
         private LocalDate endDate;
 
-        private List<Task> tarefas;
+        private List<Task> tasks;
 
         static public ProjectOutDto toOutDto(Project project) {
                 return new ProjectOutDto(
