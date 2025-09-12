@@ -2,7 +2,7 @@ package br.com.fiap.projectmgt.infrastructure.entity;
 
 import br.com.fiap.projectmgt.domain.entity.PageList;
 import br.com.fiap.projectmgt.domain.entity.Project;
-import br.com.fiap.projectmgt.domain.entity.Tarefa;
+import br.com.fiap.projectmgt.domain.entity.Task;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +42,7 @@ public class JpaProjectEntity {
     }
 
     public static Project toProject(JpaProjectEntity project) {
-        List<Tarefa> tasks = new ArrayList<Tarefa>();
+        List<Task> tasks = new ArrayList<Task>();
         return new Project(
                 project.getId(),
                 project.getName(),
@@ -52,9 +52,17 @@ public class JpaProjectEntity {
                 tasks);
     }
 
+    public static JpaProjectEntity fromProject(Project project) {
+        return new JpaProjectEntity(
+                project.getName(),
+                project.getDescription(),
+                project.getStartDate(),
+                project.getEndDate());
+    }
+
     public static PageList<Project> toProjectEntityList(Page<JpaProjectEntity> jpaProjects, Integer pageSize,
-                                                        Integer pageNumber) {
-        List<Tarefa> tasks = new ArrayList<Tarefa>();
+            Integer pageNumber) {
+        List<Task> tasks = new ArrayList<Task>();
         List<Project> projects = jpaProjects.getContent().stream().parallel().map(
                 p -> new Project(
                         p.getId(),

@@ -1,14 +1,19 @@
 package br.com.fiap.projectmgt.interfaces.controller;
 
+import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
 import br.com.fiap.projectmgt.domain.service.ProjectService;
 import br.com.fiap.projectmgt.domain.entity.PageList;
 import br.com.fiap.projectmgt.domain.entity.Project;
 import br.com.fiap.projectmgt.interfaces.dto.PageListDTO;
 import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
 
+@RestController
+@RequestMapping("/project")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -18,15 +23,15 @@ public class ProjectController {
     }
 
     @GetMapping
-    public ResponseEntity<PageListDTO<ProjectOutDto>> getProjects(@RequestParam(name = "pageSize", required = false,defaultValue = "10") Integer pageSize,
-                                                                   @RequestParam(name = "pageNumber", required = false,defaultValue = "0") Integer pageNumber) {
+    public ResponseEntity<PageListDTO<ProjectOutDto>> getProjects(
+            @RequestParam(name = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam(name = "pageNumber", required = false, defaultValue = "0") Integer pageNumber) {
         PageList<Project> allProjects = projectService.listProjects(pageSize, pageNumber);
         PageListDTO<ProjectOutDto> projectsDto = Project.toOutDtoList(allProjects);
 
         return ResponseEntity.ok(projectsDto);
     }
 
-    /*
     @GetMapping("/{id}")
     public ResponseEntity<ProjectOutDto> getProject(@PathVariable("id") Long id) {
         try {
@@ -35,7 +40,7 @@ public class ProjectController {
 
             return ResponseEntity.ok(projectDto);
         } catch (NoSuchElementException e) {
-            throw new ResourceNotFoundException("Não foi possível localizar o id = "+id);
+            throw new ResourceNotFoundException("Não foi possível localizar o id = " + id);
         }
     }
 
@@ -62,16 +67,15 @@ public class ProjectController {
 
             return ResponseEntity.ok().build();
         } catch (NoSuchElementException e) {
-            throw new ResourceNotFoundException("Não foi possível localizar o id = "+id);
+            throw new ResourceNotFoundException("Não foi possível localizar o id = " + id);
         }
     }
 
     @PatchMapping
     public ResponseEntity<Project> patchProject(@RequestBody Project project) {
-        //Implementar em casa o patch
+        // Implementar em casa o patch
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(project);
     }
 
-    */
 }

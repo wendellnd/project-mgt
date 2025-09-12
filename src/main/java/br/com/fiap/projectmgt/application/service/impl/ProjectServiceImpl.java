@@ -16,48 +16,19 @@ public final class ProjectServiceImpl implements ProjectService {
         return this.repository.findAll(pageSize, pageNumber);
     }
 
-    @Override
     public Project getProject(Long projectId) {
-        return null;
-    }
-
-    @Override
-    public Project createProject(Project project) {
-        return null;
-    }
-
-    @Override
-    public Project updateProject(Project project) {
-        return null;
-    }
-
-    @Override
-    public void deleteProject(Long projectId) {
-
-    }
-
-    /*
-    public Project getProject(Long projectId) {
-        final JpaProjectEntity p = this.repository.findById(projectId).orElseThrow();
-
-        return JpaProjectEntity.toProject(p);
+        return this.repository.findById(projectId);
     }
 
     public Project createProject(Project project) {
-        JpaProjectEntity savedEntity = this.repository.save(Project.toJpaProjectEntity(project));
-
-        return JpaProjectEntity.toProject(savedEntity);
+        return this.repository.save(project);
     }
 
     public Project updateProject(Project project) {
-        JpaProjectEntity entity = Project.toJpaProjectEntity(project);
-        this.repository.save(entity);
-
-        return project;
+        return this.repository.save(project);
     }
 
     public void deleteProject(Long projectId) {
-        this.repository.deleteById(projectId);
+        this.repository.delete(projectId);
     }
-     */
 }
