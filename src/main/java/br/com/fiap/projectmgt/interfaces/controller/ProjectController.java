@@ -1,40 +1,32 @@
 package br.com.fiap.projectmgt.interfaces.controller;
 
-import br.com.fiap.projectmgt.application.service.ProjectService;
-import br.com.fiap.projectmgt.application.service.impl.ProjectServiceImpl;
+import br.com.fiap.projectmgt.domain.service.ProjectService;
+import br.com.fiap.projectmgt.domain.entity.PageList;
 import br.com.fiap.projectmgt.domain.entity.Project;
-import br.com.fiap.projectmgt.domain.entity.ProjectList;
-import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
+import br.com.fiap.projectmgt.interfaces.dto.PageListDTO;
 import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
-import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDtoList;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 
-@RestController
-@RequestMapping("/project")
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    public ProjectController(ProjectServiceImpl projectService) {
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
 
     @GetMapping
-    public ResponseEntity<ProjectOutDtoList> getProjects(@RequestParam(name = "pageSize", required = false,defaultValue = "10") Integer pageSize,
+    public ResponseEntity<PageListDTO<ProjectOutDto>> getProjects(@RequestParam(name = "pageSize", required = false,defaultValue = "10") Integer pageSize,
                                                                    @RequestParam(name = "pageNumber", required = false,defaultValue = "0") Integer pageNumber) {
-
-        ProjectList allProjects = projectService.listProjects(pageSize, pageNumber);
-        ProjectOutDtoList projectsDto = ProjectList.toOutDtoList(allProjects);
+        PageList<Project> allProjects = projectService.listProjects(pageSize, pageNumber);
+        PageListDTO<ProjectOutDto> projectsDto = Project.toOutDtoList(allProjects);
 
         return ResponseEntity.ok(projectsDto);
     }
 
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<ProjectOutDto> getProject(@PathVariable("id") Long id) {
         try {
@@ -81,5 +73,5 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(project);
     }
 
-
+    */
 }

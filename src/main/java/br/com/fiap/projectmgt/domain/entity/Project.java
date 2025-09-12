@@ -1,6 +1,7 @@
 package br.com.fiap.projectmgt.domain.entity;
 
 import br.com.fiap.projectmgt.infrastructure.entity.JpaProjectEntity;
+import br.com.fiap.projectmgt.interfaces.dto.PageListDTO;
 import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
 import lombok.*;
 
@@ -44,6 +45,24 @@ public class Project {
                 project.getDescription(),
                 project.getStartDate(),
                 project.getEndDate()
+        );
+    }
+
+    static public PageListDTO<ProjectOutDto> toOutDtoList(PageList<Project> list) {
+        List<ProjectOutDto> dtoList = list.getList().stream().map(
+                p -> new ProjectOutDto(
+                        p.getId(),
+                        p.getName(),
+                        p.getDescription(),
+                        p.getStartDate(),
+                        p.getEndDate()
+                )
+        ).toList();
+
+        return new PageListDTO<ProjectOutDto>(
+                dtoList,
+                list.getPageNumber(),
+                list.getPageSize()
         );
     }
 }

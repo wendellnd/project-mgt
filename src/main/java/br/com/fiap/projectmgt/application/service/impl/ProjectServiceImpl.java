@@ -1,31 +1,42 @@
 package br.com.fiap.projectmgt.application.service.impl;
 
-import br.com.fiap.projectmgt.application.service.ProjectService;
+import br.com.fiap.projectmgt.domain.repository.ProjectRepository;
+import br.com.fiap.projectmgt.domain.service.ProjectService;
+import br.com.fiap.projectmgt.domain.entity.PageList;
 import br.com.fiap.projectmgt.domain.entity.Project;
-import br.com.fiap.projectmgt.domain.entity.ProjectList;
-import br.com.fiap.projectmgt.infrastructure.entity.JpaProjectEntity;
-import br.com.fiap.projectmgt.infrastructure.repository.JpaProjectEntityRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-@Service
-public class ProjectServiceImpl implements ProjectService {
-    private final JpaProjectEntityRepository repository;
+public final class ProjectServiceImpl implements ProjectService {
+    private final ProjectRepository repository;
 
-    public ProjectServiceImpl(JpaProjectEntityRepository repository) {
+    public ProjectServiceImpl(ProjectRepository repository) {
         this.repository = repository;
     }
 
-    public ProjectList listProjects(Integer pageSize, Integer pageNumber) {
-        Page<JpaProjectEntity> pageOfProjects = this.repository.findAll(
-                Pageable
-                        .ofSize(pageSize)
-                        .withPage(pageNumber));
-
-        return JpaProjectEntity.toProjectEntityList(pageOfProjects, pageSize, pageNumber);
+    public PageList<Project> listProjects(Integer pageSize, Integer pageNumber) {
+        return this.repository.findAll(pageSize, pageNumber);
     }
 
+    @Override
+    public Project getProject(Long projectId) {
+        return null;
+    }
+
+    @Override
+    public Project createProject(Project project) {
+        return null;
+    }
+
+    @Override
+    public Project updateProject(Project project) {
+        return null;
+    }
+
+    @Override
+    public void deleteProject(Long projectId) {
+
+    }
+
+    /*
     public Project getProject(Long projectId) {
         final JpaProjectEntity p = this.repository.findById(projectId).orElseThrow();
 
@@ -48,4 +59,5 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(Long projectId) {
         this.repository.deleteById(projectId);
     }
+     */
 }
