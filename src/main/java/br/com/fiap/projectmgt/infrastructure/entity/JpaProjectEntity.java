@@ -34,6 +34,13 @@ public class JpaProjectEntity {
         super();
     }
 
+    public JpaProjectEntity(Long id, String name, String description, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
     public JpaProjectEntity(String name, String description, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.description = description;
@@ -54,6 +61,7 @@ public class JpaProjectEntity {
 
     public static JpaProjectEntity fromProject(Project project) {
         return new JpaProjectEntity(
+                project.getId(),
                 project.getName(),
                 project.getDescription(),
                 project.getStartDate(),

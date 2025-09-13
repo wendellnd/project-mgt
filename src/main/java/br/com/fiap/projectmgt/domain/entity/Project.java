@@ -1,7 +1,8 @@
 package br.com.fiap.projectmgt.domain.entity;
 
-import br.com.fiap.projectmgt.interfaces.dto.PageListDTO;
-import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
+import br.com.fiap.projectmgt.interfaces.dto.input.ProjectInputDto;
+import br.com.fiap.projectmgt.interfaces.dto.output.PageListDTO;
+import br.com.fiap.projectmgt.interfaces.dto.output.ProjectOutDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,6 +26,24 @@ public class Project {
         private LocalDate endDate;
 
         private List<Task> tasks;
+
+        public Project(Long id, String name, String description, LocalDate startDate, LocalDate endDate) {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+
+        static public Project fromInputDTO(ProjectInputDto input) {
+            return new Project(
+                    input.getId(),
+                    input.getName(),
+                    input.getDescription(),
+                    input.getStartDate(),
+                    input.getEndDate()
+            );
+        }
 
         static public ProjectOutDto toOutDto(Project project) {
                 return new ProjectOutDto(

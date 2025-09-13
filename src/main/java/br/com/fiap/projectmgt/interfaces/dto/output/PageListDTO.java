@@ -1,4 +1,4 @@
-package br.com.fiap.projectmgt.interfaces.dto;
+package br.com.fiap.projectmgt.interfaces.dto.output;
 
 import java.util.List;
 

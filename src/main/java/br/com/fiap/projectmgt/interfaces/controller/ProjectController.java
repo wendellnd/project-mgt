@@ -4,10 +4,12 @@ import br.com.fiap.projectmgt.domain.exceptions.ResourceNotFoundException;
 import br.com.fiap.projectmgt.domain.service.ProjectService;
 import br.com.fiap.projectmgt.domain.entity.PageList;
 import br.com.fiap.projectmgt.domain.entity.Project;
-import br.com.fiap.projectmgt.interfaces.dto.PageListDTO;
-import br.com.fiap.projectmgt.interfaces.dto.ProjectOutDto;
+import br.com.fiap.projectmgt.interfaces.dto.input.ProjectInputDto;
+import br.com.fiap.projectmgt.interfaces.dto.output.PageListDTO;
+import br.com.fiap.projectmgt.interfaces.dto.output.ProjectOutDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -45,7 +47,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ResponseEntity<ProjectOutDto> createProject(@RequestBody Project project) {
+    public ResponseEntity<ProjectOutDto> createProject(@Validated @RequestBody ProjectInputDto input) {
+        Project project = Project.fromInputDTO(input);
         Project createdProject = projectService.createProject(project);
         ProjectOutDto projectDto = Project.toOutDto(createdProject);
 
@@ -53,7 +56,8 @@ public class ProjectController {
     }
 
     @PutMapping
-    public ResponseEntity<ProjectOutDto> updateProject(@RequestBody Project project) {
+    public ResponseEntity<ProjectOutDto> updateProject(@Validated @RequestBody ProjectInputDto input) {
+        Project project = Project.fromInputDTO(input);
         Project updatedProject = projectService.updateProject(project);
         ProjectOutDto projectDto = Project.toOutDto(updatedProject);
 
@@ -70,12 +74,4 @@ public class ProjectController {
             throw new ResourceNotFoundException("Não foi possível localizar o id = " + id);
         }
     }
-
-    @PatchMapping
-    public ResponseEntity<Project> patchProject(@RequestBody Project project) {
-        // Implementar em casa o patch
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(project);
-    }
-
 }
